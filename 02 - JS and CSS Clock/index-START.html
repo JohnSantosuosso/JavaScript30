@@ -62,13 +62,36 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition: all 0.5s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
     }
 
   </style>
 
   <script>
+    const secondHand = document.querySelector('.second-hand'); //searches DOM for second-hand div class
+    const minuteHand = document.querySelector('.min-hand'); //searches DOM for minute-hand div class
+    const hourHand = document.querySelector('.hour-hand'); //searches DOM for minute-hand div class
 
+    function setDate() {
+      const now = new Date();
 
+      const seconds = now.getSeconds(); //gets the current seconds
+      const secondsDegrees = ((seconds / 60 ) * 360) + 90; //gets current second by degrees (out of 360), adds 90 degrees to account for earlier offset
+      secondHand.style.transform = `rotate(${secondsDegrees}deg)`; //transforms div class secondHand by rotating it based on number of seconds degrees
+      
+      const minutes = now.getMinutes(); //get current minutes
+      const minutesDegrees = ((minutes / 60) * 360) + 90; //gets current minute by degrees adds 90 to account for earlier action
+      minuteHand.style.transform = `rotate(${minutesDegrees}deg)`;
+
+      const hours = now.getHours(); //get current hours
+      const hoursDegrees = ((hours / 12) * 360) + 90; //get current hour by degrees
+      hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
+      
+    }
+    setInterval(setDate, 1000); //sets timer to run every second (1000) and grab whatever is in setDate function
   </script>
 </body>
 </html>
